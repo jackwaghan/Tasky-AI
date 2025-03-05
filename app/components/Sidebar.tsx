@@ -14,8 +14,8 @@ const list = [
     icons: <LayoutDashboard className="group-hover:stroke-blue-500" />,
   },
   {
-    title: "Todos",
-    url: "/user/todos",
+    title: "My Task",
+    url: "/user/mytask",
     icons: <CalendarCheck className="group-hover:stroke-blue-500" />,
   },
   {
@@ -38,11 +38,11 @@ const Sidebar = () => {
     <div
       className={`" h-full bg-foreground/10 fixed left-0 flex flex-col border-r border-foreground/20 z-50" ${isopen ? "w-[250px]" : "w-[70px]"} transition-all duration-300`}
     >
-      <div className="w-full py-5 flex pl-5">To Do</div>
+      <div className="w-full py-5 pl-4">To Do</div>
       <div className="w-full h-full">
         {list.map((item, i) => (
           <div
-            className={`"w-full py-3 px-5 " ${isopen ? "" : "flex"} duration-300`}
+            className={`"w-full py-3 px-4 " ${isopen ? "" : "flex"} duration-300`}
             key={i}
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => setOpen(false)}
@@ -53,12 +53,14 @@ const Sidebar = () => {
                 ${path === item.url ? "bg-foreground/10 text-foreground " : "text-foreground/60"}`}
             >
               <div>{item.icons}</div>
-              {isopen && <div className="px-4 ">{item.title}</div>}
+              {isopen && (
+                <div className="px-4 whitespace-nowrap">{item.title}</div>
+              )}
             </Link>
           </div>
         ))}
       </div>
-      <div className="py-5 w-full pl-5">
+      <div className="py-5 w-full px-4">
         <Theme />
       </div>
     </div>

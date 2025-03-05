@@ -12,9 +12,25 @@ const icons: Record<"light" | "dark" | "system", JSX.Element> = {
 const Theme = () => {
   const { setTheme, themes, theme } = useTheme();
   const [isopen, setOpen] = React.useState(false);
+  const themeRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (
+        themeRef.current &&
+        e.target &&
+        !themeRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   return (
-    <div className="relative w-fit">
+    <div ref={themeRef} className="relative w-fit">
       <div
         className="p-2 cursor-pointer  hover:bg-foreground/10 hover:scale-95 duration-300 flex items-center border border-foreground/20 rounded-lg "
         onClick={() => setOpen((prev) => !prev)}
