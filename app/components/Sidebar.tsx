@@ -10,22 +10,22 @@ import { usePathname } from "next/navigation";
 const list = [
   {
     title: "Dashboard",
-    url: "/user/dashboard",
+    url: "/app/dashboard",
     icons: <LayoutDashboard className="group-hover:stroke-blue-500" />,
   },
   {
     title: "My Task",
-    url: "/user/mytask",
+    url: "/app/mytask",
     icons: <CalendarCheck className="group-hover:stroke-blue-500" />,
   },
   {
     title: "Settings",
-    url: "/user/settings",
+    url: "/app/settings",
     icons: <Settings className="group-hover:stroke-blue-500" />,
   },
   {
     title: "Profile",
-    url: "/user/profile",
+    url: "/app/profile",
     icons: <User className="group-hover:stroke-blue-500" />,
   },
 ];
@@ -36,7 +36,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`" h-full bg-foreground/10 fixed left-0 flex flex-col border-r border-foreground/20 z-50" ${isopen ? "w-[250px]" : "w-[70px]"} transition-all duration-300`}
+      className={`" h-full fixed left-0 flex flex-col border-r border-foreground/20 z-50" ${isopen ? "w-[250px] bg-background" : "w-[70px] bg-foreground/10"} transition-all duration-300`}
     >
       <div className="w-full py-5 pl-4">To Do</div>
       <div className="w-full h-full">
