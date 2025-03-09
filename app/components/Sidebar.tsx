@@ -3,7 +3,6 @@ import React from "react";
 import { CalendarCheck } from "lucide-react";
 import { LayoutDashboard } from "lucide-react";
 import { User } from "lucide-react";
-import { Settings } from "lucide-react";
 import { useWindow } from "@/Hook/window";
 import MobileSidebar from "./Sidebar/MobileSidebar";
 import DesktopSidebar from "./Sidebar/DesktopSidebar";
@@ -17,11 +16,6 @@ export const Sidebarlist = [
     title: "My Task",
     url: "/app/mytask",
     icons: <CalendarCheck className="group-hover:stroke-blue-500" />,
-  },
-  {
-    title: "Settings",
-    url: "/app/settings",
-    icons: <Settings className="group-hover:stroke-blue-500" />,
   },
   {
     title: "Profile",

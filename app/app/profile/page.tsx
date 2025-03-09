@@ -92,13 +92,15 @@ const Page = () => {
         </div>
         <div className="mt-10 md:mt-20 w-full md:pl-20 pl-5 space-y-10">
           <div className="flex flex-col space-y-5">
-            <p>Clear all the tasks in your account</p>
+            <p className="font-geist-mono ">
+              Clear all the tasks in your account
+            </p>
             <button className="w-fit px-4 py-2 border border-foreground/20 rounded">
               Clear Tasks
             </button>
           </div>
           <div className="flex flex-col space-y-5 ">
-            <p>Delete your account Permanently</p>
+            <p className="font-geist-mono ">Delete your account Permanently</p>
             <button className="w-fit px-4 py-2 border border-foreground/20 rounded mb-40 md:mb-0">
               Delete
             </button>
