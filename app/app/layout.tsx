@@ -1,6 +1,7 @@
-import Sidebar from "../components/Sidebar";
 import "../globals.css";
 import type { Metadata } from "next";
+import AppLayout from "./Components/AppLayout";
+import Sidebar from "../components/Sidebar";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -13,9 +14,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="w-screen h-screen flex">
+    <div className="w-screen h-screen flex-col flex">
       <Sidebar />
-      <div className="pl-[70px] w-full h-full">{children}</div>
+      <AppLayout>{children}</AppLayout>
     </div>
   );
 }

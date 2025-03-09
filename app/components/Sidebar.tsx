@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
-import Theme from "./Theme";
-import Link from "next/link";
 import { CalendarCheck } from "lucide-react";
 import { LayoutDashboard } from "lucide-react";
 import { User } from "lucide-react";
 import { Settings } from "lucide-react";
-import { usePathname } from "next/navigation";
-const list = [
+import { useWindow } from "@/Hook/window";
+import MobileSidebar from "./Sidebar/MobileSidebar";
+import DesktopSidebar from "./Sidebar/DesktopSidebar";
+export const Sidebarlist = [
   {
     title: "Dashboard",
     url: "/app/dashboard",
@@ -30,41 +30,9 @@ const list = [
   },
 ];
 const Sidebar = () => {
-  const [isopen, setOpen] = React.useState(false);
-  const path = usePathname();
-  console.log(path.split);
-
-  return (
-    <div
-      className={`" h-full fixed left-0 flex flex-col border-r border-foreground/20 z-50" ${isopen ? "w-[250px] bg-background" : "w-[70px] bg-foreground/10"} transition-all duration-300`}
-    >
-      <div className="w-full py-5 pl-4">To Do</div>
-      <div className="w-full h-full">
-        {list.map((item, i) => (
-          <div
-            className={`"w-full py-3 px-4 " ${isopen ? "" : "flex"} duration-300`}
-            key={i}
-            onMouseEnter={() => setOpen(true)}
-            onMouseLeave={() => setOpen(false)}
-          >
-            <Link
-              href={item.url}
-              className={`p-2 rounded-lg  hover:text-foreground duration-300 group flex
-                ${path === item.url ? "bg-foreground/10 text-foreground " : "text-foreground/60"}`}
-            >
-              <div>{item.icons}</div>
-              {isopen && (
-                <div className="px-4 whitespace-nowrap">{item.title}</div>
-              )}
-            </Link>
-          </div>
-        ))}
-      </div>
-      <div className="py-5 w-full px-4">
-        <Theme />
-      </div>
-    </div>
-  );
+  const Mobile = useWindow();
+  if (typeof Mobile === "undefined") return null;
+  return <div>{Mobile ? <MobileSidebar /> : <DesktopSidebar />}</div>;
 };
 
 export default Sidebar;
