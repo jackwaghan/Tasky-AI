@@ -17,7 +17,6 @@ const Page = () => {
     tasks.find((item) => item.id === id)?.task || []
   );
 
-  console.log("task", task);
   if (!project) {
     redirect("/app/mytask");
   }

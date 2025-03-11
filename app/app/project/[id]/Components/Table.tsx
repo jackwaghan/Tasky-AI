@@ -11,7 +11,6 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { ChevronUp } from "lucide-react";
-
 export default function TaskTable({
   tasks,
   globalFilter,
@@ -57,6 +56,11 @@ export default function TaskTable({
     pageSize: 10,
   });
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [editingCell, setEditingCell] = useState<{
+    rowId: string;
+    columnId: string;
+  } | null>(null);
+  const [editValue, setEditValue] = useState("");
 
   const table = useReactTable({
     data,
@@ -77,16 +81,36 @@ export default function TaskTable({
     },
   });
 
+  // Handle editing a cell
+  const handleEdit = (rowId: string, columnId: string, value: string) => {
+    setEditingCell({ rowId, columnId });
+    setEditValue(value);
+  };
+
+  // Save the new value
+  const handleSave = () => {
+    if (!editingCell) return;
+    const { rowId, columnId } = editingCell;
+
+    setData((prevData) =>
+      prevData.map((row) =>
+        row.id === Number(rowId) ? { ...row, [columnId]: editValue } : row
+      )
+    );
+    setEditingCell(null);
+    // 🔹 Force re-render to avoid layout shift on mobile
+  };
+
   const deleteSelectedRows = () => {
     const selectedIds = new Set(
       table.getSelectedRowModel().rows.map((row) => row.original.id)
     );
     setData((prevData) => prevData.filter((row) => !selectedIds.has(row.id)));
-    setRowSelection({}); // Clear selection
+    setRowSelection({});
   };
 
   return (
-    <div className="p-4 overflow-x-auto ">
+    <div className="p-4 overflow-y-auto ">
       <button
         onClick={deleteSelectedRows}
         disabled={table.getSelectedRowModel().rows.length === 0}
@@ -96,7 +120,7 @@ export default function TaskTable({
         <span>Delete</span>
       </button>
 
-      <table className="min-w-full border border-foreground/10 ">
+      <table className="min-w-full border border-foreground/10 overflow-auto">
         <thead className="bg-foreground/10 select-none">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -113,7 +137,7 @@ export default function TaskTable({
                     )}
                     {header.column.getCanSort() && (
                       <ChevronUp
-                        className={`p-0.5 duration-300 ${
+                        className={`p-0.5 hover:bg-foreground/10 rounded duration-300 ${
                           header.column.getIsSorted() === "desc"
                             ? "rotate-180"
                             : header.column.getIsSorted() === "asc"
@@ -131,14 +155,39 @@ export default function TaskTable({
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td
-                  key={cell.id}
-                  className="px-4 py-2 border border-foreground/10"
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
+              {row.getVisibleCells().map((cell) => {
+                const isEditing =
+                  editingCell?.rowId === String(row.original.id) &&
+                  editingCell.columnId === cell.column.id;
+                return (
+                  <td
+                    key={cell.id}
+                    className="px-4 py-2 border border-foreground/10 cursor-pointer"
+                    onClick={() =>
+                      cell.column.id === "title" &&
+                      handleEdit(
+                        String(row.original.id),
+                        cell.column.id,
+                        cell.getValue() as string
+                      )
+                    }
+                  >
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        value={editValue}
+                        onChange={(e) => setEditValue(e.target.value)}
+                        onBlur={handleSave}
+                        onKeyDown={(e) => e.key === "Enter" && handleSave()}
+                        autoFocus
+                        className="bg-foreground/10 rounded w-fit focus:outline-none p-1"
+                      />
+                    ) : (
+                      flexRender(cell.column.columnDef.cell, cell.getContext())
+                    )}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>
