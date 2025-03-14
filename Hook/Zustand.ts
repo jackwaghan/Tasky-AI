@@ -11,7 +11,15 @@ export const useUser = create((set) => ({
 }));
 
 export const useTask: UseBoundStore<StoreApi<TaskStore>> = create((set) => ({
-  tasks: [],
+  tasks: [
+    {
+      id: 1,
+      title: "i am Jack",
+      priority: "High",
+      dueDate: "2025-03-15",
+      status: "Pending",
+    },
+  ],
   addTask: (data: Task) =>
     set((state: { tasks: Task[] }) => ({ tasks: [...state.tasks, data] })),
   updateTask: (data: Task) =>

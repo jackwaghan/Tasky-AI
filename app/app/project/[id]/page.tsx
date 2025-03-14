@@ -1,22 +1,19 @@
 "use client";
 import React from "react";
 import { useParams, redirect } from "next/navigation";
-import { Projects, tasks } from "@/lib/data";
+import { Projects } from "@/lib/data";
 import { useWindow } from "@/Hook/window";
 import { CirclePlus } from "lucide-react";
 import Table from "./Components/Table";
+import { useTask } from "@/Hook/Zustand";
 
 const Page = () => {
   const params = useParams();
   const id = Number(params.id);
   const [globalFilter, setGlobalFilter] = React.useState("");
   const Mobile = useWindow();
-
+  const { tasks } = useTask();
   const project = Projects.find((item) => item.id === id);
-  const [task] = React.useState(
-    tasks.find((item) => item.id === id)?.task || []
-  );
-
   if (!project) {
     redirect("/app/mytask");
   }
@@ -44,7 +41,7 @@ const Page = () => {
         </div>
         <div className="overflow-y-auto md:pb-20 pb-50">
           <Table
-            tasks={task}
+            tasks={tasks}
             globalFilter={globalFilter}
             setGlobalFilter={setGlobalFilter}
           />
