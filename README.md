@@ -1,8 +1,6 @@
-# Tasky AI - A Multiple AI Models
+# Tasky AI - A Simple task management application with AI Powered
 
 ![Task AI Landing Page](./public/Tasky-AI-Image.png)
-
-Unlock the power ofmultiple AI modelsin one lightning-fast chat experience
 
 ## 🚀 Features
 
