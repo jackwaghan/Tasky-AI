@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tasky AI - A Multiple AI Models
 
-## Getting Started
+![Task AI Landing Page](./public/Tasky-AI-Image.png)
 
-First, run the development server:
+Unlock the power ofmultiple AI modelsin one lightning-fast chat experience
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Next.js** for server-side rendering and static site generation
+- **TypeScript Integration** for type-safe code
+- **Responsive Design** for optimal viewing on any device
+- **Custom Fonts** powered by [next/font/google](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)
+- **Rich Icon Library** using `Lucide Icons, React Icons`
+- **State Management** with `zustand`
+- **Database** with `supabase`
+- **Vercel AI-SDK**
+- **API** with `Gemini API`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📂 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/`: Application directory
+- `components/`: Reusable UI components
+- `public/`: Static assets
+- `Types`: Export types
+- `utils`: Supabase
+- `lib`: Hooks
 
-## Learn More
+## 🛠️ Installation
 
-To learn more about Next.js, take a look at the following resources:
+Follow these steps to get a local copy up and running:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the repo**
+   ```sh
+   git clone https://github.com/jackwaghan/Task-Management.git
+   ```
+2. **Install dependencies**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```sh
+   bun install
+   ```
 
-## Deploy on Vercel
+3. **Add Resend API Key in your `.env.local`**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Run the development server**
+   ```sh
+   bun run dev
+   ```
+   Visit [http://localhost:3000](http://localhost:3000) to view the site.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌐 Live Demo
+
+Check out the live version of this portfolio [here](https://tasky.jackwaghan.com/).
+
+## 🤝 Contributing
+
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📜 License
+
+Distributed under the MIT License. See `LICENSE` for more information.

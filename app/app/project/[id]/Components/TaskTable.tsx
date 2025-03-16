@@ -62,6 +62,10 @@ export default function TaskTable({
   } | null>(null);
   const [editValue, setEditValue] = useState("");
 
+  React.useEffect(() => {
+    setData(tasks);
+  }, [tasks]);
+
   const table = useReactTable({
     data,
     columns,
@@ -91,14 +95,12 @@ export default function TaskTable({
   const handleSave = () => {
     if (!editingCell) return;
     const { rowId, columnId } = editingCell;
-
     setData((prevData) =>
       prevData.map((row) =>
         row.id === Number(rowId) ? { ...row, [columnId]: editValue } : row
       )
     );
     setEditingCell(null);
-    // 🔹 Force re-render to avoid layout shift on mobile
   };
 
   const deleteSelectedRows = () => {

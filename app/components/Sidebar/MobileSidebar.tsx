@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { PanelRightOpen } from "lucide-react";
+import { ClipboardList } from "lucide-react";
+
 const MobileSidebar = () => {
   const [isOpen, setOpen] = React.useState(false);
   const list = Sidebarlist;
@@ -14,7 +16,10 @@ const MobileSidebar = () => {
       {isOpen && (
         <div className="fixed left-0 w-[250px] h-full border-r border-foreground/20 flex flex-col  justify-between bg-background z-50">
           <div className="h-[80px] w-full flex items-center justify-between px-5 border-b border-foreground/20">
-            <span>Logo</span>
+            <div className="flex items-center w-full h-full gap-3">
+              <ClipboardList className="stroke-orange-500" />
+              <div className="text-xl font-geist-mono">Tasky AI</div>
+            </div>
             <X
               className="border border-foreground/20 rounded p-1 h-7 w-7 bg-foreground/15"
               onClick={() => setOpen(false)}

@@ -3,21 +3,15 @@ import Image from "next/image";
 import React from "react";
 import { Pen } from "lucide-react";
 import { useWindow } from "@/Hook/window";
+import { useUser } from "@/Hook/Zustand";
 
 const Page = () => {
-  const [username, setUsername] = React.useState<string>("");
-  const [email, setEmail] = React.useState<string>("");
-  const [name, setName] = React.useState<string>("");
-  const [url, setUrl] = React.useState<string>("");
+  const [url] = React.useState<string>(
+    "https://t3.ftcdn.net/jpg/09/40/98/76/360_F_940987693_p329N2dFCW7jG7Yqt3k5H9dxKoYqKSIQ.jpg"
+  );
   const Mobile = useWindow();
-  setTimeout(() => {
-    setUsername("jackwaghan");
-    setEmail("jackwaghan@gmail.com");
-    setName("Jack Waghan A S");
-    setUrl(
-      "https://res.cloudinary.com/dqswovyzi/image/upload/v1738251548/Portfolio/wfz9ph5xnzoyfz6svshu.jpg"
-    );
-  }, 1000);
+
+  const { userInfo } = useUser();
   if (typeof Mobile === "undefined") return null;
   return (
     <div
@@ -42,10 +36,10 @@ const Page = () => {
             <h1 className="font-geist-mono font-semibold tracking-wider ">
               Name
             </h1>
-            {name.length !== 0 ? (
+            {userInfo.name !== null ? (
               <div className="w-fit flex items-center justify-center ">
                 <span className="px-4 py-1.5 border border-foreground/15 rounded-lg w-fit text-foreground/50 bg-foreground/10">
-                  {name}
+                  {userInfo.name}
                 </span>
                 <div className="flex items-center justify-center px-2 py-2 ml-4 cursor-pointer hover:scale-95 duration-300 border border-foreground/15 rounded-lg bg-foreground/10">
                   <Pen className="w-4 h-4" />
@@ -59,10 +53,10 @@ const Page = () => {
             <h1 className="font-geist-mono font-semibold tracking-wider ">
               username
             </h1>
-            {username.length !== 0 ? (
+            {userInfo.name !== null ? (
               <div className="w-fit flex items-center justify-center ">
                 <span className="px-4 py-1.5 border border-foreground/15 rounded-lg w-fit text-foreground/50 bg-foreground/10">
-                  {username}
+                  {userInfo.name}
                 </span>
                 {/* <div className="flex items-center justify-center px-2 py-2 ml-4 cursor-pointer hover:scale-95 duration-300 border border-foreground/15 rounded-lg bg-foreground/10">
                 <Pen className="w-4 h-4" />
@@ -76,10 +70,10 @@ const Page = () => {
             <h1 className="font-geist-mono font-semibold tracking-wider ">
               Email
             </h1>
-            {email.length !== 0 ? (
+            {userInfo.email !== null ? (
               <div className="w-fit flex items-center justify-center ">
                 <span className="px-4 py-1.5 border border-foreground/15 rounded-lg w-fit text-foreground/50 bg-foreground/10">
-                  {email}
+                  {userInfo.email}
                 </span>
                 {/* <div className="flex items-center justify-center px-2 py-2 ml-4 cursor-pointer hover:scale-95 duration-300 border border-foreground/15 rounded-lg bg-foreground/10">
                 <Pen className="w-4 h-4" />
@@ -99,6 +93,25 @@ const Page = () => {
               Clear Tasks
             </button>
           </div>
+          <div className="flex flex-col space-y-5">
+            <p className="font-geist-mono ">
+              Log out from all the devices and browsers
+            </p>
+            <div className="flex gap-4 ">
+              <button
+                onClick={() => Logout("global")}
+                className="w-fit px-2 py-1 md:px-4 md:py-2 border border-foreground/20 rounded cursor-pointer hover:scale-95 duration-200 bg-red-500/80"
+              >
+                Terminate all
+              </button>
+              <button
+                onClick={() => Logout("local")}
+                className="w-fit px-2 py-1 md:px-4 md:py-2 border border-foreground/20 rounded cursor-pointer hover:scale-95 duration-200 bg-red-500/80"
+              >
+                Terminate this device
+              </button>
+            </div>
+          </div>
           <div className="flex flex-col space-y-5 ">
             <p className="font-geist-mono ">Delete your account Permanently</p>
             <button className="w-fit px-4 py-2 border border-foreground/20 rounded mb-40 md:mb-0">
@@ -112,3 +125,10 @@ const Page = () => {
 };
 
 export default Page;
+
+const Logout = async (value: "global" | "local") => {
+  await fetch("/api/logout", {
+    method: "GET",
+    headers: { scope: value },
+  }).then(() => (window.location.href = "/auth/login"));
+};

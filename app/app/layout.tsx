@@ -2,6 +2,7 @@ import "../globals.css";
 import type { Metadata } from "next";
 import AppLayout from "./Components/AppLayout";
 import Sidebar from "../components/Sidebar";
+import UserLayout from "./UserLayout";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -15,6 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <div className="w-screen h-screen flex overflow-hidden">
+      <UserLayout />
       <Sidebar />
       <AppLayout>{children}</AppLayout>
     </div>

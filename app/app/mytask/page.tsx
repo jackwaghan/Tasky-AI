@@ -3,37 +3,31 @@ import { useWindow } from "@/Hook/window";
 import React from "react";
 import { CirclePlus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Projects } from "@/lib/data";
-
+import { useProject } from "@/Hook/Zustand";
+import Modal from "./Modal";
 const LoadingProject = Array.from({ length: 8 }, (_, i) => i);
 const Page = () => {
-  const [search, setSearch] = React.useState<string>("");
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [project, setProject] = React.useState<
-    { id: number; name: string; description: string }[] | []
-  >(Projects);
+  const { projects, loading, filter, setFilter, setShow, show } = useProject();
+
   const Mobile = useWindow();
   const Router = useRouter();
-  React.useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
 
   React.useEffect(() => {
-    if (search.length === 0) {
-      setProject(Projects);
-      return;
+    setFilter(projects);
+  }, [projects, setFilter]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target.value;
+    if (searchValue === "") {
+      setFilter(projects);
     }
-    setProject(
-      Projects.filter(
-        (item) =>
-          item.name.toLowerCase().includes(search.toLowerCase()) ||
-          item.description.toLowerCase().includes(search.toLowerCase())
-      )
+    const filtered = projects.filter(
+      (item) =>
+        item.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        item.description.toLowerCase().includes(e.target.value.toLowerCase())
     );
-  }, [search]);
-  console.log(search);
+    setFilter(filtered);
+  };
 
   if (typeof Mobile === "undefined") return null;
   return (
@@ -44,27 +38,31 @@ const Page = () => {
           <div className=" h-full items-center flex space-x-2 duration-300">
             <div className="flex items-center">
               <input
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => handleSearch(e)}
                 type="text"
                 placeholder="Search"
                 className="focus:outline-none focus:ring-1 ring-blue-500 border border-foreground/15 rounded  w-40 h-8 pl-2 bg-transparent"
               />
             </div>
-            <div className="cursor-pointer p-2  hover:scale-95 flex  ">
+            <div
+              className="cursor-pointer p-2  hover:scale-95 flex  "
+              onClick={() => setShow(true)}
+            >
               <CirclePlus className="w-7 h-7 stroke-blue-500" />
             </div>
           </div>
         </div>
-        {project.length !== 0 ? (
+
+        {loading || filter.length !== 0 ? (
           <div className="w-full px-5 grid md:grid-cols-3 lg:grid-cols-4 md:gap-10 space-y-5 overflow-y-auto pt-10 pb-50 ">
-            {!isLoading
-              ? project.map((item) => (
+            {!loading
+              ? filter.map((item) => (
                   <div
                     key={item.id}
                     className="border border-foreground/15 rounded p-5 w-full h-[200px] flex flex-col hover:shadow-xl duration-300 hover:border-foreground/30 cursor-pointer "
                     onClick={() => Router.push(`/app/project/${item.id}`)}
                   >
-                    <h1 className="">{item.name}</h1>
+                    <h1 className="">{item.title}</h1>
 
                     <p className="text-foreground/50 mt-10">
                       {item.description}
@@ -84,6 +82,7 @@ const Page = () => {
           </div>
         )}
       </div>
+      {show && <Modal />}
     </div>
   );
 };
