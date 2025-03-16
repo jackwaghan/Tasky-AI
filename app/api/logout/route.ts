@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
+export const runtime = "edge";
+
 export async function GET(req: NextRequest) {
   const method = req.headers.get("scope") as "global" | "local" | "others";
   const supabase = await createClient();

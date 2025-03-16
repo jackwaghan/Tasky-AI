@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { jwtDecode } from "jwt-decode";
 import { createClient } from "@/lib/supabase/server";
 
+export const runtime = "edge";
+
 export type JWTData = {
   user: { id: string; email: string; user_metadata: { role: string } };
 };
