@@ -2,7 +2,6 @@ import { useProject, useUser } from "@/Hook/Zustand";
 import { v4 as uuid } from "uuid";
 import { X } from "lucide-react";
 import React from "react";
-import { createClient } from "@/lib/supabase/client";
 
 const Modal = () => {
   const { setShow, setFilter, projects, addProject } = useProject();

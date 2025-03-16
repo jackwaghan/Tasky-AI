@@ -6,10 +6,12 @@ import { ThemeProvider } from "next-themes";
 const GeistSans = Geist({
   variable: "--font-geist-sans",
   weight: ["400", "700"],
+  subsets: ["latin"],
 });
 const GeistMono = Geist_Mono({
   variable: "--font-geist-mono",
   weight: ["400", "700"],
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {

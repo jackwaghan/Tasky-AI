@@ -37,7 +37,18 @@ Follow these steps to get a local copy up and running:
    bun install
    ```
 
-3. **Add Keys in your `.env.local`**
+3. **Add Keys in your `.env`**
+
+```sh
+SUPABASE_URL = ''
+SUPABASE_KEY = ''
+
+NEXT_PUBLIC_SUPABASE_URL = ''
+NEXT_PUBLIC_SUPABASE_KEY = ''
+
+DOMAIN = ''
+IMAGEURL = ''
+```
 
 4. **Run the development server**
    ```sh
